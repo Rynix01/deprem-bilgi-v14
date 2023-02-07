@@ -132,8 +132,7 @@ client.on("ready", async () => {
       )
       .setColor(Colors.Red);
     const veri = db.get("webhooks");
-    if (!veri) return;
-    veri.map((x) => {
+    veri?.map((x) => {
       const webhookClient = new WebhookClient({
         url: `${x}`,
       });
