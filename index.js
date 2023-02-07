@@ -101,45 +101,8 @@ client.on("ready", async () => {
     method: "get",
     url: "https://api.orhanaydogdu.com.tr/deprem/live.php?limit=1",
   }).then(function (response) {
-    console.log(response.data.result);
-    const embed = new EmbedBuilder()
-      .setTitle("Deprem Oldu!")
-      .addFields(
-        {
-          name: "Tarih (TS)",
-          value: `${response.data.result.map((x) => x.date)}`,
-        },
-        {
-          name: "Enlem (N)",
-          value: `${response.data.result.map((x) => x.lat)}`,
-        },
-        {
-          name: "Boylam (E)",
-          value: `${response.data.result.map((x) => x.lng)}`,
-        },
-        {
-          name: "Derinlik (KM)",
-          value: `${response.data.result.map((x) => x.depth)}`,
-        },
-        {
-          name: "Büyüklük",
-          value: `${response.data.result.map((x) => x.mag)}`,
-        },
-        {
-          name: "Yer",
-          value: `${response.data.result.map((x) => x.title)}`,
-        }
-      )
-      .setColor(Colors.Red);
-    const veri = db.get("webhooks");
-    veri?.map((x) => {
-      const webhookClient = new WebhookClient({
-        url: `${x}`,
-      });
-      webhookClient.send({ embeds: [embed] }).catch(() => {});
-    });
-
-    db.set("sondeprem", `${response.data.result.map((x) => x.hash)}`);
+    console.log(response?.data?.result);
+    db.set("sondeprem", `${response?.data?.result?.map((x) => x.hash)}`);
 
     setInterval(() => {
       axios({
@@ -147,36 +110,39 @@ client.on("ready", async () => {
         url: "https://api.orhanaydogdu.com.tr/deprem/live.php?limit=1",
       }).then(function (response) {
         if (
-          db.get("sondeprem") === `${response.data.result.map((x) => x.hash)}`
+          db.get("sondeprem") ===
+          `${response?.data?.result?.map((x) => x.hash)}`
         ) {
           console.log("Deprem olmadı");
         } else {
+          if (response.data.status === false) return;
+
           const embed = new EmbedBuilder()
             .setTitle("Deprem Oldu!")
             .addFields(
               {
                 name: "Tarih (TS)",
-                value: `${response.data.result.map((x) => x.date)}`,
+                value: `${response?.data?.result?.map((x) => x.date)}`,
               },
               {
                 name: "Enlem (N)",
-                value: `${response.data.result.map((x) => x.lat)}`,
+                value: `${response?.data?.result?.map((x) => x.lat)}`,
               },
               {
                 name: "Boylam (E)",
-                value: `${response.data.result.map((x) => x.lng)}`,
+                value: `${response?.data?.result?.map((x) => x.lng)}`,
               },
               {
                 name: "Derinlik (KM)",
-                value: `${response.data.result.map((x) => x.depth)}`,
+                value: `${response?.data?.result?.map((x) => x.depth)}`,
               },
               {
                 name: "Büyüklük",
-                value: `${response.data.result.map((x) => x.mag)}`,
+                value: `${response?.data?.result?.map((x) => x.mag)}`,
               },
               {
                 name: "Yer",
-                value: `${response.data.result.map((x) => x.title)}`,
+                value: `${response?.data?.result?.map((x) => x.title)}`,
               }
             )
             .setColor(Colors.Red);
@@ -189,7 +155,7 @@ client.on("ready", async () => {
             webhookClient.send({ embeds: [embed] }).catch(() => {});
           });
 
-          db.set("sondeprem", `${response.data.result.map((x) => x.hash)}`);
+          db.set("sondeprem", `${response?.data?.result?.map((x) => x.hash)}`);
         }
       });
     }, 60000);
