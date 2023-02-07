@@ -2,6 +2,7 @@ const {
   EmbedBuilder,
   PermissionsBitField,
   ChannelType,
+  PermissionFlagsBits,
 } = require("discord.js");
 const { SlashCommandBuilder } = require("@discordjs/builders");
 const db = require("orio.db");
@@ -16,7 +17,8 @@ module.exports = {
         // Ensure the user can only select a TextChannel for output
         .addChannelTypes(ChannelType.GuildText)
         .setRequired(true)
-    ),
+    )
+    .setDefaultMemberPermissions(PermissionFlagsBits.Administrator),
 
   // komutu geliştirmek istersen guide: https://discordjs.guide/slash-commands/advanced-creation.html
   run: async (client, interaction) => {
