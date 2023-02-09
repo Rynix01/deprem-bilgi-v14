@@ -1,6 +1,6 @@
 {
   "name": "deprem-bilgi",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Deprem Bilgi Botu",
   "main": "index.js",
   "scripts": {
