@@ -67,6 +67,13 @@ module.exports = {
       method: "get",
       url: "https://api.orhanaydogdu.com.tr/deprem/live.php?limit=1",
     }).then(function (response) {
+      let color =
+        `${response?.data?.result?.map((x) => x.mag)}` > "3" &&
+        `${response?.data?.result?.map((x) => x.mag)}` < "5"
+          ? Colors.Yellow
+          : `${response?.data?.result?.map((x) => x.mag)}` > "5"
+          ? Colors.Red
+          : Colors.Green;
       if (response.data.status === false)
         return interaction.reply("API Kaynaklı gösteremiyorum");
 
@@ -97,7 +104,7 @@ module.exports = {
             value: `${response?.data?.result?.map((x) => x.title)}`,
           }
         )
-        .setColor(Colors.Red);
+        .setColor(color);
       interaction.deferReply();
       interaction.deleteReply();
       interaction.channel
@@ -122,6 +129,20 @@ module.exports = {
             }).then(function (response) {
               if (response.data.status === false)
                 return interaction.reply("API Kaynaklı gösteremiyorum");
+
+              let color =
+                `${response?.data?.result
+                  ?.map((x) => x.mag)
+                  .slice(choices - 1, choices)}` > "3" &&
+                `${response?.data?.result
+                  ?.map((x) => x.mag)
+                  .slice(choices - 1, choices)}` < "5"
+                  ? Colors.Yellow
+                  : `${response?.data?.result
+                      ?.map((x) => x.mag)
+                      .slice(choices - 1, choices)}` > "5"
+                  ? Colors.Red
+                  : Colors.Green;
 
               const embed = new EmbedBuilder()
                 .addFields(
@@ -162,7 +183,7 @@ module.exports = {
                       .slice(choices - 1, choices)}`,
                   }
                 )
-                .setColor(Colors.Red);
+                .setColor(color);
 
               msg.edit({ embeds: [embed] });
               m.deferUpdate();
