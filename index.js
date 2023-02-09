@@ -116,7 +116,13 @@ client.on("ready", async () => {
           console.log("Deprem olmadı");
         } else {
           if (response.data.status === false) return;
-
+          let color =
+            `${response?.data?.result?.map((x) => x.mag)}` > "3" &&
+            `${response?.data?.result?.map((x) => x.mag)}` < "5"
+              ? Colors.Yellow
+              : `${response?.data?.result?.map((x) => x.mag)}` > "5"
+              ? Colors.Red
+              : Colors.Green;
           const embed = new EmbedBuilder()
             .setTitle("Deprem Oldu!")
             .addFields(
@@ -145,7 +151,10 @@ client.on("ready", async () => {
                 value: `${response?.data?.result?.map((x) => x.title)}`,
               }
             )
-            .setColor(Colors.Red);
+            .setColor(color)
+            .setThumbnail(
+              "https://cdn.discordapp.com/attachments/935097817763033109/1072570846759092295/deprem.png"
+            );
           const veri = db.get("webhooks");
           if (!veri) return;
           veri.map((x) => {
