@@ -16,7 +16,7 @@ module.exports = {
     .setName("deprem")
     .setDescription("Girdiğiniz tarihe ait 10 deprem gösterir!")
     .addStringOption((option) =>
-      option.setName("tarih").setDescription("Bir tarih girin Örn: 2022-02-21")
+      option.setName("tarih").setDescription("Bir tarih girin Örn: 2022-02-21").setRequired(true)
     ), // komutu geliştirmek istersen guide: https://discordjs.guide/slash-commands/advanced-creation.html
   run: async (client, interaction) => {
     const tarih = interaction.options.getString("tarih");
