@@ -67,6 +67,9 @@ module.exports = {
       method: "get",
       url: "https://api.orhanaydogdu.com.tr/deprem/live.php?limit=1",
     }).then(function (response) {
+      if (response.data.status === false)
+        return interaction.reply("API Kaynaklı gösteremiyorum");
+
       const embed = new EmbedBuilder()
         .addFields(
           {
@@ -117,6 +120,9 @@ module.exports = {
               method: "get",
               url: "https://api.orhanaydogdu.com.tr/deprem/live.php?limit=10",
             }).then(function (response) {
+              if (response.data.status === false)
+                return interaction.reply("API Kaynaklı gösteremiyorum");
+
               const embed = new EmbedBuilder()
                 .addFields(
                   {
@@ -163,9 +169,7 @@ module.exports = {
             });
           });
 
-          collector.on("end", (collected) => {
-            collected.edit({ content: "Bu mesaj devre dışı" });
-          });
+          collector.on("end", (collected) => {});
         });
     });
   },
