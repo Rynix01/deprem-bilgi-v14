@@ -102,7 +102,7 @@ client.on("ready", async () => {
     url: "https://api.orhanaydogdu.com.tr/deprem/live.php?limit=1",
   }).then(function (response) {
     console.log(response?.data?.result);
-    db.set("sondeprem", `${response?.data?.result?.map((x) => x.hash)}`);
+    db.set("sondeprem", `${response?.data?.result?.map((x) => x.date)}`);
 
     setInterval(() => {
       axios({
@@ -111,7 +111,7 @@ client.on("ready", async () => {
       }).then(function (response) {
         if (
           db.get("sondeprem") ===
-          `${response?.data?.result?.map((x) => x.hash)}`
+          `${response?.data?.result?.map((x) => x.date)}`
         ) {
           console.log("Deprem olmadı");
         } else {
@@ -120,7 +120,7 @@ client.on("ready", async () => {
             `${response?.data?.result?.map((x) => x.mag)}` > "3" &&
             `${response?.data?.result?.map((x) => x.mag)}` < "5"
               ? Colors.Yellow
-              : `${response?.data?.result?.map((x) => x.mag)}` > "5"
+              : `${response?.data?.result?.map((x) => x.mag)}` >= "5"
               ? Colors.Red
               : Colors.Green;
           const embed = new EmbedBuilder()
@@ -164,7 +164,7 @@ client.on("ready", async () => {
             webhookClient.send({ embeds: [embed] }).catch(() => {});
           });
 
-          db.set("sondeprem", `${response?.data?.result?.map((x) => x.hash)}`);
+          db.set("sondeprem", `${response?.data?.result?.map((x) => x.date)}`);
         }
       });
     }, 60000);
