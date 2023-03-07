@@ -131,12 +131,10 @@ client.on("ready", async () => {
                 value: `${response?.data?.result?.map((x) => x.date)}`,
               },
               {
-                name: "Enlem (N)",
-                value: `${response?.data?.result?.map((x) => x.lat)}`,
-              },
-              {
-                name: "Boylam (E)",
-                value: `${response?.data?.result?.map((x) => x.lng)}`,
+                name: "Koordinatlar ",
+                value: `${response?.data?.result?.map(
+                  (x) => x.geojson.coordinates
+                )}`,
               },
               {
                 name: "Derinlik (KM)",
