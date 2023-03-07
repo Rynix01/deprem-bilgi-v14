@@ -84,12 +84,10 @@ module.exports = {
             value: `${response?.data?.result?.map((x) => x.date)}`,
           },
           {
-            name: "Enlem (N)",
-            value: `${response?.data?.result?.map((x) => x.lat)}`,
-          },
-          {
-            name: "Boylam (E)",
-            value: `${response?.data?.result?.map((x) => x.lng)}`,
+            name: "Koordinatlar ",
+            value: `${response?.data?.result?.map(
+              (x) => x.geojson.coordinates
+            )}`,
           },
           {
             name: "Derinlik (KM)",
@@ -153,16 +151,10 @@ module.exports = {
                       .slice(choices - 1, choices)}`,
                   },
                   {
-                    name: "Enlem (N)",
-                    value: `${response?.data?.result
-                      ?.map((x) => x.lat)
-                      .slice(choices - 1, choices)}`,
-                  },
-                  {
-                    name: "Boylam (E)",
-                    value: `${response?.data?.result
-                      ?.map((x) => x.lng)
-                      .slice(choices - 1, choices)}`,
+                    name: "Koordinatlar ",
+                    value: `${response?.data?.result?.map(
+                      (x) => x.geojson.coordinates
+                    )}`,
                   },
                   {
                     name: "Derinlik (KM)",
