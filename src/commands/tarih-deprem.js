@@ -16,7 +16,7 @@ module.exports = {
     .setName("deprem")
     .setDescription("Girdiğiniz tarihe ait 10 deprem gösterir!")
     .addStringOption((option) =>
-      option.setName("tarih").setDescription("Bir tarih girin Örn: 2022-02-21").setRequired(true)
+      option.setName("tarih").setDescription("Bir tarih girin Örn: 2022-02-21")
     ), // komutu geliştirmek istersen guide: https://discordjs.guide/slash-commands/advanced-creation.html
   run: async (client, interaction) => {
     const tarih = interaction.options.getString("tarih");
@@ -98,12 +98,10 @@ module.exports = {
               value: `${response?.data?.result?.map((x) => x.date)}`,
             },
             {
-              name: "Enlem (N)",
-              value: `${response?.data?.result?.map((x) => x.lat)}`,
-            },
-            {
-              name: "Boylam (E)",
-              value: `${response?.data?.result?.map((x) => x.lng)}`,
+              name: "Koordinatlar ",
+              value: `${response?.data?.result?.map(
+                (x) => x.geojson.coordinates
+              )}`,
             },
             {
               name: "Derinlik (KM)",
@@ -162,16 +160,10 @@ module.exports = {
                         .slice(choices - 1, choices)}`,
                     },
                     {
-                      name: "Enlem (N)",
-                      value: `${response?.data?.result
-                        ?.map((x) => x.lat)
-                        .slice(choices - 1, choices)}`,
-                    },
-                    {
-                      name: "Boylam (E)",
-                      value: `${response?.data?.result
-                        ?.map((x) => x.lng)
-                        .slice(choices - 1, choices)}`,
+                      name: "Koordinatlar ",
+                      value: `${response?.data?.result?.map(
+                        (x) => x.geojson.coordinates
+                      )}`,
                     },
                     {
                       name: "Derinlik (KM)",
